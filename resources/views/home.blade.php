@@ -1,5 +1,4 @@
-{{-- @extends('adminlte::page') --}}
-@extends('adminlte::page', ['iFrameEnabled' => true])
+@extends('adminlte::page',['iFrameEnabled' => true])
 
 @section('title', 'Dashboard')
 

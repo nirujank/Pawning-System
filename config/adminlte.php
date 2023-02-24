@@ -321,34 +321,34 @@ return [
         ['header' => 'Jobs'],
         [
             'text'    => 'MANAGE PAWNING',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-fw fa-cubes',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'level_one',
+                    'text'    => 'Articles',
                     'url'     => '#',
                     'submenu' => [
                         [
-                            'text' => 'level_two',
-                            'url'  => '#',
+                            'text' => 'All Articles',
+                            'url'  => '/article',
                         ],
                         [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
+                            'text' => 'Add Article',
+                            'url'  => '/article/create',
                         ],
+                        // [
+                        //     'text'    => 'level_two',
+                        //     'url'     => '#',
+                        //     'submenu' => [
+                        //         [
+                        //             'text' => 'level_three',
+                        //             'url'  => '#',
+                        //         ],
+                        //         [
+                        //             'text' => 'level_three',
+                        //             'url'  => '#',
+                        //         ],
+                        //     ],
+                        // ],
                     ],
                 ],
                 [
@@ -359,7 +359,7 @@ return [
         ],
         [
             'text'    => 'PAWN SHOP',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-fw fa-balance-scale ',
             'submenu' => [
                 [
                     'text' => 'level_one',
@@ -415,7 +415,7 @@ return [
         ],
         [
             'text'    => 'REPORTING',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-fw fa-folder-open',
             'submenu' => [
                 [
                     'text' => 'level_one',
@@ -443,22 +443,22 @@ return [
         ],
         [
             'text'    => 'ADMINISTRATOR',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-fw fa-address-card ',
             'submenu' => [
                 [
                     'text' => 'Add New User',
                     'url'  => '#',
-                    'icon' => 'fas fa-fw fa-lock',
+                    'icon' => 'fas fa-fw fa-user-plus',
                 ],
                 [
                     'text' => 'Users List',
                     'url'  => 'user',
-                    'icon' => 'fas fa-fw fa-lock',
+                    'icon' => 'fas fa-fw fa-users',
                 ],
                 [
                     'text' => 'Rset Password',
                     'url'  => '#',
-                    'icon' => 'fas fa-fw fa-lock',
+                    'icon' => 'fas fa-fw fa-user-md',
                 ],
             ],
         ],

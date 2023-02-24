@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('Users', 'Dashboard')
+@section('title', 'Users')
 
 @section('content_header')
     <h1>Users</h1>
@@ -24,45 +24,33 @@
                </button>';
 
         $config = [
-            // 'data' => [$users, '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'],
-            // 'data' => [[22, 'John Bender', '+02 (123) 123456789', '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'], [19, 'Sophia Clemens', '+99 (987) 987654321', '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>'], [3, 'Peter Sousa', '+69 (555) 12367345243', '<nobr>' . $btnEdit . $btnDelete . $btnDetails . '</nobr>']],
             'order' => [[1, 'asc']],
-            // 'columns' => [id, name, email, ['orderable' => false]],
-            // 'columns' => [['data' => 'id'], ['data' => 'name'], ['data' => 'email'],['orderable' => false]],
         ];
     @endphp
 
     {{-- Minimal example / fill data using the component slot --}}
     <x-adminlte-datatable id="table5" :heads="$heads" :config="$config" theme="light" striped hoverable>
-
-        {{-- @foreach ($config['data'] as $row)
-            <tr>
-                @foreach ($row as $cell)
-                    <td>{!! $cell !!}</td>
-                @endforeach
-            </tr>
-        @endforeach --}}
         @foreach ($users as $user)
-        <tr>
-                <td>{{$user->id}}</td>
-                <td>{{$user->name}}</td>
-                <td>{{$user->email}}</td>
+            <tr>
+                <td>{{ $user->id }}</td>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
                 <td>
                     <nobr>
-                    <button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
-                        <i class="fa fa-lg fa-fw fa-pen"></i>
-                    </button>
-                    <button class="btn btn-xs btn-default text-danger mx-1 shadow" title="Delete">
-                        <i class="fa fa-lg fa-fw fa-trash"></i>
-                    </button>
-                    <button class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
-                        <i class="fa fa-lg fa-fw fa-eye"></i>
-                    </button>
-                </nobr>
+                        <button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+                            <i class="fa fa-lg fa-fw fa-pen"></i>
+                        </button>
+                        <button class="btn btn-xs btn-default text-danger mx-1 shadow" title="Delete">
+                            <i class="fa fa-lg fa-fw fa-trash"></i>
+                        </button>
+                        <button class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+                            <i class="fa fa-lg fa-fw fa-eye"></i>
+                        </button>
+                    </nobr>
                 </td>
 
-        </tr>
-    @endforeach
+            </tr>
+        @endforeach
 
     </x-adminlte-datatable>
 

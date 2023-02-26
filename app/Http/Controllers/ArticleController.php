@@ -16,8 +16,18 @@ class ArticleController extends Controller
     public function index(Request $request)
     {
 
-          $articles = Article::latest()->get();
-        return view('article.index',compact('articles'));
+        $articles = Article::all();
+        return view('article.index', compact('articles'));
+
+
+    }
+
+    public function fetchArticles()
+    {
+        $articles = Article::all();
+        return response()->json([
+            'articles' => $articles,
+        ]);
     }
 
     /**
@@ -25,7 +35,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        // return view('article.create');
+        //
     }
 
     /**
@@ -33,25 +43,17 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'name' => 'required',
-        //     'description' => 'required',
-
-        //     ]);
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'description' => 'required',
         ]);
 
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
                 'errors' => $validator->messages(),
             ]);
-        }
-        else
-        {
+        } else {
             $article = new Article();
             $article->name = $request->name;
             $article->description = $request->description;
@@ -61,9 +63,7 @@ class ArticleController extends Controller
                 'message' => 'Article Added Succesfully',
                 'data' => $article,
             ]);
-
         }
-
     }
 
     /**
@@ -80,7 +80,18 @@ class ArticleController extends Controller
     public function edit($id)
     {
         $article = Article::find($id);
-        return response()->json($article);
+        if ($article) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Article Edited Succesfully',
+                'data' => $article,
+            ]);
+        } else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Error',
+            ]);
+        }
     }
 
     /**
@@ -88,16 +99,31 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+
+        $article->name = $request->name;
+        $article->description = $request->description;
+        $article->save();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Article Updated Succesfully',
+            'data' => $article,
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Article $article)
     {
-        Article::find($id)->delete();
-
-        return response()->json(['success'=>'Article deleted successfully.']);
+        $article->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Article Deleted Succesfully',
+            'data' => $article,
+        ]);
     }
 }

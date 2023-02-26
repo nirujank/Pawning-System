@@ -7,10 +7,40 @@
 @stop
 
 @section('content')
+    {{-- <div class="container"> --}}
+    {{-- <a class="btn btn-info" href="javascript:void(0)" id="createNewPost"> Add New Article</a> --}}
     <div id="success_message"></div>
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addTodoModal">Add New Article</button>
     </br></br>
-    <table id="data-table" class="table table-bordered table-striped">
+
+    {{-- Setup data for datatables --}}
+    {{-- @php
+        $heads = ['ID', 'Article Name', ['label' => 'Article Description', 'width' => 40], ['label' => 'Actions', 'no-export' => true, 'width' => 5]];
+
+    @endphp
+ --}}
+    {{-- Minimal example / fill data using the component slot --}}
+    {{-- <x-adminlte-datatable id="table1" :heads="$heads" striped hoverable bordered compressed>
+        @foreach ($articles as $article)
+            <tr id="todo_{{ $article->id }}">
+                <td>{{ $article->id }}</td>
+                <td>{{ $article->name }}</td>
+                <td>{{ $article->description }}</td>
+                <td>
+                    <nobr>
+                        <a data-id="{{ $article->id }}" onclick="editTodo(event.target)" class="btn btn-info">Edit<i
+                                class="fa fa-sm fa-fw fa-pen"></i></a>
+                        <a class="btn btn-danger" onclick="deleteTodo({{ $article->id }})">Delete<i
+                                class="fa fa-sm fa-fw fa-trash"></i></a> --}}
+    {{-- <button class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
+                            <i class="fa fa-lg fa-fw fa-eye"></i>
+                        </button> --}}
+    {{-- </nobr>
+                </td>
+            </tr>
+        @endforeach
+    </x-adminlte-datatable> --}}
+    <table id="table1" class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>ID</th>
@@ -106,49 +136,32 @@
     @stop
 
     @section('js')
-        <script type="text/javascript">
+        <script>
             function fetchArticle() {
-                $.ajaxSetup({
-                    header: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                $.ajax({
+                    type: "GET",
+                    url: "fetcharticles",
+                    dataType: "json",
+                    success: function(response) {
+                        $('tbody').html("");
+                        $.each(response.articles, function(key, item) {
+                            $('tbody').append('<tr id="todo_' + item.id + '">\
+                                                <td>' + item.id + '</td>\
+                                                <td>' + item.name + '</td>\
+                                                <td>' + item.description + '</td>\
+                                                <td> <nobr><a data-id="' + item.id +
+                                '" onclick="editTodo(event.target)" class="btn btn-info">Edit<iclass="fa fa-sm fa-fw fa-pen"></i></a><a class="btn btn-danger" onclick="deleteTodo(' +
+                                item.id + ')">Delete<i class="fa fa-sm fa-fw fa-trash"></i></a></nobr></td>\
+                                                </tr>');
+                        });
                     }
                 });
-                var table = $('#data-table').DataTable({
-                    order: [
-                        [0, 'desc']
-                    ],
-                    processing: true,
-                    serverSide: true,
-                    ajax: '{{ route('fetcharticles') }}',
-                    columns: [{
-                            data: 'id',
-                            name: 'id'
-                        },
-                        {
-                            data: 'name',
-                            name: 'name'
-                        },
-                        {
-                            data: 'description',
-                            name: 'description'
-                        },
-                        {
-                            data: 'action',
-                            name: 'action',
-                            render: function(status, type, row, meta) {
-                                action = '<a data-id="' + row.id + '" onclick="editTodo(' + row.id +
-                                    ')" class="btn btn-info editBtn">Edit<i class="fa fa-sm fa-fw fa-pen"></i></a><a data-id="' +
-                                    row.id + '"  onclick="deleteTodo(' + row.id +
-                                    ')" class="btn btn-danger">Delete<i class="fa fa-sm fa-fw fa-trash"></i></a>'
-                                return action;
-                            }
-                        },
-                    ],
-                });
-
             }
+
             $(document).ready(function() {
                 fetchArticle();
+
+
             });
 
             function addTodo() {
@@ -181,9 +194,21 @@
                             $("#addTodoModal").modal('hide');
                             $("#addTodoModal").find('input').val("");
                             $("#addTodoModal").find('textarea').val("");
-
-                            $("#data-table").dataTable().fnDestroy();
                             fetchArticle();
+
+                            //         $('table tbody').append(`
+                    //       <tr id="todo_${data.data.id}">
+                    //           <td>${data.data.id}</td>
+                    //           <td>${data.data.name}</td>
+                    //           <td>${data.data.description}</td>
+                    //           <td>
+                    //             <nobr>
+                    //               <a data-id="${data.data.id }" onclick="editTodo(${data.data.id})" class="btn btn-info">Edit<i class="fa fa-sm fa-fw fa-pen"></i></a>
+                    //               <a data-id="${data.data.id}"  onclick="deleteTodo(${data.data.id})" class="btn btn-danger">Delete<i class="fa fa-sm fa-fw fa-trash"></i></a>
+                    //             </nobr>
+                    //           </td>
+                    //       </tr>
+                    //   `);
 
                             $('#name').val();
                             $('#description').val();
@@ -212,27 +237,17 @@
                         $("#todo_" + data.data.id).remove();
                     }
                 });
-                $("#data-table").dataTable().fnDestroy();
                 fetchArticle();
             }
 
-            function editTodo(id) {
-                let url = `/article/${id}/edit`;
-                let token = $('meta[name="csrf-token"]').attr('content');
-                // $('#editTodoModal').modal('show');
-                $.ajax({
-                    url: url,
-                    type: "GET",
-                    data: {
-                        _token: token
-                    },
-                    success: function(response) {
-                        $("#todo_id").val(response.data.id);
-                        $("#editname").val(response.data.name);
-                        $("#editdescription").val(response.data.description);
-                        $('#editTodoModal').modal('show');
-                    }
-                });
+            function editTodo(e) {
+                var id = $(e).data("id");
+                var name = $("#todo_" + id + " td:nth-child(2)").html();
+                var description = $("#todo_" + id + " td:nth-child(3)").html();
+                $("#todo_id").val(id);
+                $("#editname").val(name);
+                $("#editdescription").val(description);
+                $('#editTodoModal').modal('show');
             }
 
             function updateTodo() {
@@ -258,7 +273,6 @@
                         $('#editname').val('');
                         $('#editdescription').val('');
                         $('#editTodoModal').modal('hide');
-                        $("#data-table").dataTable().fnDestroy();
                         fetchArticle();
                     },
                     error: function(response) {

@@ -1,21 +1,21 @@
 @extends('adminlte::page')
 
-@section('title', 'Articles')
+@section('title', 'Add Article')
 
 @section('content_header')
-    <h1>Articles</h1>
+    <h1>Carratage Value</h1>
 @stop
 
 @section('content')
     <div id="success_message"></div>
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addTodoModal">Add New Article</button>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addTodoModal">Add New Carratage</button>
     </br></br>
     <table id="data-table" class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Article Name</th>
-                <th>Article Description</th>
+                <th>No</th>
+                <th>Carratage Value(K)</th>
+                <th>Value Per 1gram(1g)</th>
                 <th>Actions</th>
 
             </tr>
@@ -24,35 +24,35 @@
 
         </tbody>
     </table>
-
-
     </div>
-
-    {{-- Compressed with style options / fill data using the plugin config --}}
 
     <div class="modal fade" id="addTodoModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="modelHeading">Add New Article</h4>
+                    <h4 class="modal-title" id="modelHeading">New Carratage Value</h4>
                 </div>
                 <div class="modal-body">
 
                     <ul id="saveform_errList"></ul>
 
                     <div class="form-group">
-                        <label for="name" class="col-sm-12">Article Name</label>
+                        <label for="name" class="col-sm-12">Carratage Value(K)</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Enter Article">
+                            <input type="number" class="form-control" id="carrat_value" name="carrat_value"
+                                placeholder="Enter Carratage Value">
                             <span id="taskError" class="alert-message"></span>
                         </div>
                         <div class="col-sm-12">
-                            <label for="description">Article description</label>
+                            <label for="description">Value Per 1gram(1g)</label>
 
-                            <textarea id="description" class="form-control" name="description">
+                            <div class="col-sm-12">
+                                <input type="number" step="0.1" class="form-control" id="val_per_g" name="val_per_g"
+                                    placeholder="Enter Value Per 1gram">
+                                <span id="taskError" class="alert-message"></span>
+                            </div>
 
-                        </textarea>
+                            </textarea>
                         </div>
                     </div>
 
@@ -62,31 +62,36 @@
                 </div>
             </div>
         </div>
-
     </div>
+
     <div class="modal fade" id="editTodoModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Edit Article</h4>
+                    <h4 class="modal-title">Edit Carratage</h4>
                 </div>
                 <div class="modal-body">
+                    <ul id="edit_saveform_errList"></ul>
 
-                    <input type="hidden" name="todo_id" id="todo_id">
+                    <input type="hidden" name="edit_todo_id" id="edit_todo_id">
                     <div class="form-group">
-                        <label for="name" class="col-sm-2">Article name</label>
+                        <label for="name" class="col-sm-2">Carratage Value(K)</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="editname" name="editname"
-                                placeholder="Enter task">
-                            <span id="taskError" class="alert-message"></span>
+                            <input type="number" class="form-control" id="edit_carrat_value" name="edit_carrat_value"
+                                placeholder="Enter Carratage Value">
+                            <span id="edit_taskError" class="alert-message"></span>
                         </div>
                     </div>
                     <div class="col-sm-12">
-                        <label for="description">Article description</label>
+                        <label for="description">Value Per 1gram(1g)</label>
 
-                        <textarea id="editdescription" class="form-control" name="editdescription">
+                        <div class="col-sm-12">
+                            <input type="number" step="0.1" class="form-control" id="edit_val_per_g"
+                                name="edit_val_per_g" placeholder="Enter Value Per 1gram">
+                            <span id="edit_taskError" class="alert-message"></span>
+                        </div>
 
-                    </textarea>
+                        </textarea>
                     </div>
 
                 </div>
@@ -98,6 +103,8 @@
 
 
 
+
+
     @stop
 
 
@@ -106,8 +113,8 @@
     @stop
 
     @section('js')
-        <script type="text/javascript">
-            function fetchArticle() {
+        <script>
+            function fetchCarrat() {
                 $.ajaxSetup({
                     header: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -119,18 +126,18 @@
                     ],
                     processing: true,
                     serverSide: true,
-                    ajax: '{{ route('fetcharticles') }}',
+                    ajax: '{{ route('fetchcarrat') }}',
                     columns: [{
                             data: 'id',
                             name: 'id'
                         },
                         {
-                            data: 'name',
-                            name: 'name'
+                            data: 'carratage_value',
+                            name: 'carratage_value'
                         },
                         {
-                            data: 'description',
-                            name: 'description'
+                            data: 'value_per_gram',
+                            name: 'value_per_gram'
                         },
                         {
                             data: 'action',
@@ -148,14 +155,14 @@
 
             }
             $(document).ready(function() {
-                fetchArticle();
+                fetchCarrat();
             });
 
             function addTodo() {
-                var name = $('#name').val();
-                var description = $('#description').val();
+                var carratage_value = $('#carrat_value').val();
+                var value_per_gram = $('#val_per_g').val();
 
-                let _url = `article`;
+                let _url = `carrat`;
                 let _token = $('meta[name="csrf-token"]').attr('content');
 
                 $.ajax({
@@ -163,8 +170,8 @@
                     type: "POST",
                     dataType: "json",
                     data: {
-                        name: name,
-                        description: description,
+                        carratage_value: carratage_value,
+                        value_per_gram: value_per_gram,
                         _token: _token
                     },
                     success: function(data) {
@@ -180,13 +187,13 @@
                             $("#success_message").text(data.message)
                             $("#addTodoModal").modal('hide');
                             $("#addTodoModal").find('input').val("");
-                            $("#addTodoModal").find('textarea').val("");
+                            // $("#addTodoModal").find('textarea').val("");
 
                             $("#data-table").dataTable().fnDestroy();
-                            fetchArticle();
+                            fetchCarrat();
 
-                            $('#name').val();
-                            $('#description').val();
+                            // $('#name').val();
+                            // $('#description').val();
 
                             $('#addTodoModal').modal('hide');
 
@@ -199,13 +206,14 @@
             }
 
             function deleteTodo(id) {
-                let url = `/article/${id}`;
+                let url = `carrat/${id}`;
                 let token = $('meta[name="csrf-token"]').attr('content');
 
                 $.ajax({
                     url: url,
                     type: 'DELETE',
                     data: {
+                        id: id,
                         _token: token
                     },
                     success: function(data) {
@@ -213,13 +221,12 @@
                     }
                 });
                 $("#data-table").dataTable().fnDestroy();
-                fetchArticle();
+                fetchCarrat();
             }
 
             function editTodo(id) {
-                let url = `/article/${id}/edit`;
+                let url = `/carrat/${id}/edit`;
                 let token = $('meta[name="csrf-token"]').attr('content');
-                // $('#editTodoModal').modal('show');
                 $.ajax({
                     url: url,
                     type: "GET",
@@ -227,43 +234,56 @@
                         _token: token
                     },
                     success: function(response) {
-                        $("#todo_id").val(response.data.id);
-                        $("#editname").val(response.data.name);
-                        $("#editdescription").val(response.data.description);
+                        console.log(response);
+                        $("#edit_todo_id").val(response.data.id);
+                        $("#edit_carrat_value").val(response.data.carratage_value);
+                        $("#edit_val_per_g").val(response.data.value_per_gram);
                         $('#editTodoModal').modal('show');
                     }
                 });
             }
 
             function updateTodo() {
-                var name = $('#editname').val();
-                var description = $('#editdescription').val();
-                var id = $('#todo_id').val();
-                let _url = `/article/${id}`;
+                var carratage_value = $('#edit_carrat_value').val();
+                var value_per_gram = $('#edit_val_per_g').val();
+                var id = $('#edit_todo_id').val();
+                let _url = `/carrat/${id}`;
                 let _token = $('meta[name="csrf-token"]').attr('content');
 
                 $.ajax({
                     url: _url,
                     type: "PUT",
                     data: {
-                        name: name,
-                        description: description,
+                        carratage_value: carratage_value,
+                        value_per_gram: value_per_gram,
                         _token: _token
                     },
                     success: function(data) {
-                        article = data
-                        $("#todo_" + id + " td:nth-child(2)").html(article.data.name);
-                        $("#todo_" + id + " td:nth-child(3)").html(article.data.description);
-                        $('#todo_id').val('');
-                        $('#editname').val('');
-                        $('#editdescription').val('');
-                        $('#editTodoModal').modal('hide');
-                        $("#data-table").dataTable().fnDestroy();
-                        fetchArticle();
+                        if (data.status == 400) {
+                            $('#edit_saveform_errList').html("");
+                            $('#edit_saveform_errList').addClass("alert alert-danger");
+                            $.each(data.errors, function(key, err_values) {
+                                $('#edit_saveform_errList').append('<li>' + err_values + '</li>');
+                            });
+                        } else {
+                            $("#edit_saveform_errList").html("");
+                            $("#success_message").addClass('alert alert-success')
+                            $("#success_message").text(data.message)
+                            $("#addTodoModal").modal('hide');
+                            $("#addTodoModal").find('input').val("");
+                            $('#edit_todo_id').val('');
+                            $('#edit_carrat_value').val('');
+                            $('#edit_val_per_g').val('');
+                            $('#editTodoModal').modal('hide');
+                            $("#data-table").dataTable().fnDestroy();
+                            fetchCarrat();
+                        }
                     },
-                    error: function(response) {
-                        $('#taskError').text(response.responseJSON.errors.todo);
+                    error: function(data) {
+                        $('#edit_taskError').text(response.responseJSON.errors.todo);
                     }
+
+
                 });
             }
         </script>

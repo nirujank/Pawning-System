@@ -325,35 +325,19 @@ return [
             'submenu' => [
                 [
                     'text'    => 'Articles',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'All Articles',
-                            'url'  => '/article',
-                        ],
-                        [
-                            'text' => 'Add Article',
-                            'url'  => '/article/create',
-                        ],
-                        // [
-                        //     'text'    => 'level_two',
-                        //     'url'     => '#',
-                        //     'submenu' => [
-                        //         [
-                        //             'text' => 'level_three',
-                        //             'url'  => '#',
-                        //         ],
-                        //         [
-                        //             'text' => 'level_three',
-                        //             'url'  => '#',
-                        //         ],
-                        //     ],
-                        // ],
-                    ],
+                    'url'     => '/article',
                 ],
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text' => 'Carratage',
+                    'url'  => '/carrat',
+                ],
+                [
+                    'text' => 'Interest Rating',
+                    'url'  => '/interest',
+                ],
+                [
+                    'text' => 'Issuing Amount',
+                    'url'  => '/issue',
                 ],
             ],
         ],

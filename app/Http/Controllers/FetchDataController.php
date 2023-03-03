@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\Carratage;
 use App\Models\Interest;
 use App\Models\IssuingAmount;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class FetchDataController extends Controller
@@ -53,7 +54,7 @@ class FetchDataController extends Controller
         if ($request->ajax()) {
             $interest = Datatables()::of($interests)
                 ->addColumn('updated_at', function ($row) {
-                    $date = date("d F Y", strtotime($row->updated_at));
+                    $date = date("d F Y - h:i A", strtotime($row->updated_at));
                     return $date;
                 })
                 ->make(true);
@@ -68,13 +69,33 @@ class FetchDataController extends Controller
         if ($request->ajax()) {
             $issue = Datatables()::of($issues)
                 ->addColumn('updated_at', function ($row) {
-                    $date = date("d F Y", strtotime($row->updated_at));
+                    $date = date("d F Y - h:i A", strtotime($row->updated_at));
                     return $date;
                 })
                 ->make(true);
             return $issue;
         }
         return view('issue.index', compact('issues'));
+    }
+
+    public function user(Request $request)
+    {
+        $users = User::all();
+        if ($request->ajax()) {
+            $user = Datatables()::of($users)
+                ->addColumn('action', function ($row) {
+                    $btn = '<a data-id="${data.data.id }" onclick="editTodo(${data.data.id})" class="btn btn-info">Edit<i class="fa fa-sm fa-fw fa-pen"></i></a>
+                       <a data-id="${data.data.id}"  onclick="deleteTodo(${data.data.id})" class="btn btn-danger">Delete<i class="fa fa-sm fa-fw fa-trash"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+            return $user;
+        }
+        // return response()->json([
+        //     'articles' => $articles,
+        // ]);
+        return view('user.index', compact('user'));
     }
 
 }

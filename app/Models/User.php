@@ -18,8 +18,14 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'first_name',
+        'last_name',
         'name',
         'email',
+        'role',
+        'status',
+        'dessignation',
+        'image',
         'password',
     ];
 
@@ -42,10 +48,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function adminlte_image(){
+    public function adminlte_image()
+    {
         // return asset('images/avatar.png');
         return 'https://picsum.photos/300/300';
-
     }
     public function adminlte_desc()
     {
@@ -54,6 +60,6 @@ class User extends Authenticatable
 
     public function adminlte_profile_url()
     {
-        return 'profile/username';
+        return 'profile';
     }
 }

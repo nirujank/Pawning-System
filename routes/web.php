@@ -4,6 +4,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CarratageController;
 use App\Http\Controllers\FetchDataController;
 use App\Http\Controllers\InterestController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\IssuingAmountController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('fetchcarrat',[FetchDataController::class,'carrat'])->name('fetchcarrat');
     Route::get('fetchInterset',[FetchDataController::class,'interest'])->name('fetchInterset');
     Route::get('fetchIssue',[FetchDataController::class,'issue'])->name('fetchIssue');
+    Route::get('fetchUser',[FetchDataController::class,'user'])->name('fetchUser');
+    Route::get('profile',[UserController::class,'profile'])->name('profile');
+    Route::get('invoice',[InvoiceController::class,'index'])->name('invoice');
+
+
 
 });
 

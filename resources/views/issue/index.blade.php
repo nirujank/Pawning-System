@@ -72,6 +72,7 @@
                 order: [
                     [0, 'desc']
                 ],
+                autoWidth: false,
                 processing: true,
                 serverSide: true,
                 ajax: '{{ route('fetchIssue') }}',
@@ -110,6 +111,12 @@
                     _token: _token
                 },
                 success: function(data) {
+                    const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
                     if (data.status == 400) {
                         $('#saveform_errList').html("");
                         $('#saveform_errList').addClass("alert alert-danger");
@@ -118,10 +125,12 @@
                         });
                     } else {
                         $("#saveform_errList").html("");
-                        $("#success_message").addClass('alert alert-success')
-                        $("#success_message").text(data.message)
                         $("#addTodoModal").modal('hide');
                         $("#addTodoModal").find('input').val("");
+                        Toast.fire({
+                                type: 'success',
+                                title: data.message,
+                            });
                         // $("#addTodoModal").find('textarea').val("");
 
                         $("#data-table").dataTable().fnDestroy();

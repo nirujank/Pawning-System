@@ -113,9 +113,8 @@ class CarratageController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function destroy(string $id)
     {
-        $id = $request->id;
         Carratage::where(['id' => $id])->delete();
         return response()->json([
             'status' => 200,

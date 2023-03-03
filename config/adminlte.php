@@ -256,7 +256,7 @@ return [
     'dashboard_url' => 'home',
     'logout_url' => 'logout',
     'login_url' => 'login',
-    'register_url' => 'register',
+    'register_url' => 'false',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
     'profile_url' => false,
@@ -430,12 +430,7 @@ return [
             'icon'    => 'fas fa-fw fa-address-card ',
             'submenu' => [
                 [
-                    'text' => 'Add New User',
-                    'url'  => '#',
-                    'icon' => 'fas fa-fw fa-user-plus',
-                ],
-                [
-                    'text' => 'Users List',
+                    'text' => 'Users',
                     'url'  => 'user',
                     'icon' => 'fas fa-fw fa-users',
                 ],
@@ -550,7 +545,7 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',

@@ -117,6 +117,7 @@
                     order: [
                         [0, 'desc']
                     ],
+                    autoWidth: false,
                     processing: true,
                     serverSide: true,
                     ajax: '{{ route('fetcharticles') }}',
@@ -154,7 +155,12 @@
             function addTodo() {
                 var name = $('#name').val();
                 var description = $('#description').val();
-
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
                 let _url = `article`;
                 let _token = $('meta[name="csrf-token"]').attr('content');
 
@@ -176,11 +182,16 @@
                             });
                         } else {
                             $("#saveform_errList").html("");
-                            $("#success_message").addClass('alert alert-success')
-                            $("#success_message").text(data.message)
                             $("#addTodoModal").modal('hide');
                             $("#addTodoModal").find('input').val("");
                             $("#addTodoModal").find('textarea').val("");
+                            Toast.fire({
+                                type: 'success',
+                                title: data.message,
+                                customClass: {
+                                    popup: 'adjust'
+                                }
+                            })
 
                             $("#data-table").dataTable().fnDestroy();
                             fetchArticle();
@@ -201,19 +212,48 @@
             function deleteTodo(id) {
                 let url = `/article/${id}`;
                 let token = $('meta[name="csrf-token"]').attr('content');
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
 
-                $.ajax({
-                    url: url,
-                    type: 'DELETE',
-                    data: {
-                        _token: token
-                    },
-                    success: function(data) {
-                        $("#todo_" + data.data.id).remove();
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You will not be able to recover this imaginary file!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: '#DD6B55',
+                    confirmButtonText: 'Yes, delete it!',
+                    closeOnConfirm: true
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result) {
+
+                        $.ajax({
+                            type: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: url,
+                            data: {
+                                _token: token
+                            },
+                            success: function(response, textStatus, xhr) {
+                                Toast.fire({
+                                    type: 'success',
+                                    title: "Article Deleted Successfully!",
+                                    customClass: {
+                                        popup: 'adjust'
+                                    }
+                                })
+                                $("#data-table").dataTable().fnDestroy();
+                                fetchArticle();
+                            }
+                        });
                     }
                 });
-                $("#data-table").dataTable().fnDestroy();
-                fetchArticle();
             }
 
             function editTodo(id) {
@@ -241,6 +281,12 @@
                 var id = $('#todo_id').val();
                 let _url = `/article/${id}`;
                 let _token = $('meta[name="csrf-token"]').attr('content');
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
 
                 $.ajax({
                     url: _url,
@@ -258,6 +304,13 @@
                         $('#editname').val('');
                         $('#editdescription').val('');
                         $('#editTodoModal').modal('hide');
+                        Toast.fire({
+                                type: 'success',
+                                title: data.message,
+                                customClass: {
+                                    popup: 'adjust'
+                                }
+                            })
                         $("#data-table").dataTable().fnDestroy();
                         fetchArticle();
                     },

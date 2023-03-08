@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Carratage;
 use App\Models\Interest;
+use App\Models\Invoice;
 use App\Models\IssuingAmount;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -97,5 +98,27 @@ class FetchDataController extends Controller
         // ]);
         return view('user.index', compact('user'));
     }
+
+
+    public function invoice(Request $request)
+    {
+        $invoices = Invoice::all();
+        if ($request->ajax()) {
+            $invoice = Datatables()::of($invoices)
+                // ->addColumn('action', function ($row) {
+                //     $btn = '<a data-id="${data.data.id }" onclick="editTodo(${data.data.id})" class="btn btn-info">Edit<i class="fa fa-sm fa-fw fa-pen"></i></a>
+                //        <a data-id="${data.data.id}"  onclick="deleteTodo(${data.data.id})" class="btn btn-danger">Delete<i class="fa fa-sm fa-fw fa-trash"></i></a>';
+                //     return $btn;
+                // })
+                ->rawColumns(['action'])
+                ->make(true);
+            return $invoice;
+        }
+        // return response()->json([
+        //     'articles' => $articles,
+        // ]);
+        return view('invoice.invoice', compact('invoice'));
+    }
+
 
 }

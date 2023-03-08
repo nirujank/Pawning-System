@@ -339,6 +339,10 @@ return [
                     'text' => 'Issuing Amount',
                     'url'  => '/issue',
                 ],
+                [
+                    'text' => 'Invoice',
+                    'url'  => '/invoice',
+                ],
             ],
         ],
         [
@@ -428,6 +432,7 @@ return [
         [
             'text'    => 'ADMINISTRATOR',
             'icon'    => 'fas fa-fw fa-address-card ',
+            'can'         => 'user',
             'submenu' => [
                 [
                     'text' => 'Users',

@@ -14,11 +14,8 @@ class Invoice extends Model
         'address',
         'phone',
         'email',
-        'article_name',
-        'carratage_value',
-        'value_per_gram',
-        'gross_weight',
-        'net_weight',
-        'value',
+        'article_details',
     ];
+
+    protected $casts = ['article_details' => 'array'];
 }

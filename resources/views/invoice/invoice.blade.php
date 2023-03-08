@@ -7,7 +7,8 @@
 @stop
 
 @section('content')
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addTodoModal">Create Invoice</button>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addTodoModal">Create
+        Invoice</button></br></br>
     <table id="invoice-table" class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -68,7 +69,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Contact Number*</label>
-                                        <input type="email" class="form-control required" id="phone" name="phone"
+                                        <input type="number" class="form-control required" id="phone" name="phone"
                                             placeholder="Enter Contact Number" required>
                                         <span id="taskError" class="alert-message"></span>
                                     </div>
@@ -198,13 +199,72 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="viewModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modelHeading">Add New Article</h4>
+                </div>
+                <div class="modal-body">
+
+                    <table id="view-table" class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <th>NIC</th>
+                                <td class="nic" colspan="5"></td>
+                            </tr>
+                            <tr>
+                                <th>Customer Name</th>
+                                <td class="customer" colspan="5"></td>
+                            </tr>
+                            <tr>
+                                <th>Address</th>
+                                <td class="address" colspan="5"></td>
+                            </tr>
+                            <tr>
+                                <th>Article Name</th>
+                                <th>Carratage Value</th>
+                                <th>Value Per Gram</th>
+                                <th>Gross Weight</th>
+                                <th>Net Weight</th>
+                                <th>Value</th>
+                            </tr>
+                            <tr id="article">
+
+
+
+                            </tr>
+                            <tr>
+                                <th>Total Price</th>
+                                <td id="total" colspan="5"></td>
+                            </tr>
+                            <tr>
+                                <th>Issuable Amount</th>
+                                <td id="issuable" colspan="5"></td>
+                            </tr>
+                            <tr>
+                                <th>Expected Amount</th>
+                                <td id="expected" colspan="5"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="">Print</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 
 @stop
 
 
 @section('css')
     <style>
-
         .modal-lg {
             max-width: 1200px;
         }
@@ -302,67 +362,69 @@
 @stop
 
 @section('js')
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     <script>
         function fetchInvoice() {
-                $.ajaxSetup({
-                    header: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                var table = $('#invoice-table').DataTable({
-                    dom: "Bfrtip",
-                    order: [
-                        [0, 'desc']
-                    ],
-                    autoWidth: false,
-                    processing: true,
-                    serverSide: true,
-                    ajax: '{{ route('fetchinvoice') }}',
-                    columns: [{
-                            data: 'id',
-                            name: 'id'
-                        },
-                        {
-                            data: 'customer_name',
-                            name: 'customer_name'
-                        },
-                        {
-                            data: 'phone',
-                            name: 'phone'
-                        },
-                        {
-                            data: 'email',
-                            name: 'email'
-                        },
-                        {
-                            data: 'total',
-                            name: 'total'
-                        },
-                        {
-                            data: 'issuable',
-                            name: 'issuable'
-                        },
-                        {
-                            data: 'expected',
-                            name: 'expected'
-                        },
-                        {
-                            data: 'view',
-                            name: 'view',
-                            render: function(status, type, row, meta) {
-                                action = '<a data-id="' + row.id + '" onclick="viewInvoice(' + row.id +
-                                    ')" class="btn btn-info viewBtn">View<i class="fa fa-sm fa-fw fa-pen"></i></a>'
-                                return action;
-                            }
-                        },
-                    ],
-
-                });
-
-            }
-            $(document).ready(function() {
-                fetchInvoice();
+            $.ajaxSetup({
+                header: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
             });
+            var table = $('#invoice-table').DataTable({
+                // dom: "Bfrtip",
+                order: [
+                    [0, 'desc']
+                ],
+                autoWidth: false,
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('fetchinvoice') }}',
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'customer_name',
+                        name: 'customer_name'
+                    },
+                    {
+                        data: 'phone',
+                        name: 'phone'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'total',
+                        name: 'total'
+                    },
+                    {
+                        data: 'issuable',
+                        name: 'issuable'
+                    },
+                    {
+                        data: 'expected',
+                        name: 'expected'
+                    },
+                    {
+                        data: 'view',
+                        name: 'view',
+                        render: function(status, type, row, meta) {
+                            action = '<a data-id="' + row.id + '" onclick="viewInvoice(' + row.id +
+                                ')" class="btn btn-info viewBtn">View &nbsp<i class="fa fa-eye" aria-hidden="true"></i></a>'
+                            return action;
+                        }
+                    },
+                ],
+
+            });
+
+        }
+        $(document).ready(function() {
+            fetchInvoice();
+        });
 
 
 
@@ -380,12 +442,28 @@
                 }
             });
 
+            // validate email field
+            var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            var email = $('#email').val();
+            var valid_email;
+            if (!regex.test(email)) {
+                valid_email = 0;
+            } else {
+                valid_email = 1;
+            }
+            //  ------------------
+
             if ($val > 0) {
                 alert('Please enter the hightlighted values');
+                return false;
+            } else if (valid_email != 1) {
+                alert('Please enter valid email address!');
                 return false;
             } else {
                 $("#tabtwo").trigger("click");
             }
+
+
         }
 
 
@@ -580,11 +658,11 @@
             }
             console.log(data);
             const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000
-                });
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
 
             $.ajax({
                 url: "{{ route('invoice.saveInvoice') }}",
@@ -596,20 +674,20 @@
                 success: function(response) {
                     if (response.success) {
                         alert("success!!") //Message come from controller
-                            $("#addTodoModal").modal('hide');
-                            $("#addTodoModal").find('input').val("");
-                            $("#addTodoModal").find('textarea').val("");
-                            $("#addTodoModal").find('select').val("");
+                        $("#addTodoModal").modal('hide');
+                        $("#addTodoModal").find('input').val("");
+                        $("#addTodoModal").find('textarea').val("");
+                        $("#addTodoModal").find('select').val("");
 
-                            Toast.fire({
-                                type: 'success',
-                                title: "Invoice Created Successfully",
-                                customClass: {
-                                    popup: 'adjust'
-                                }
-                            });
-                            $("#invoice-table").dataTable().fnDestroy();
-                            fetchInvoice();
+                        Toast.fire({
+                            type: 'success',
+                            title: "Invoice Created Successfully",
+                            customClass: {
+                                popup: 'adjust'
+                            }
+                        });
+                        $("#invoice-table").dataTable().fnDestroy();
+                        fetchInvoice();
                     } else {
                         alert("Error")
                     }
@@ -618,6 +696,51 @@
                     console.log(error)
                 }
             });
+        }
+
+        function viewInvoice(id) {
+            var id;
+            $('#viewModal').modal('show', function(e) {
+                var id = $(e.relatedTarget).data('id');
+            });
+            // alert(id);
+            var viewdata;
+            $.ajax({
+                dataType: 'json',
+                async: false,
+                url: "{{ route('invoice.getInvoice') }}",
+                data: {
+                    "id": id
+                },
+                type: 'get',
+                success: function(result) {
+                    viewdata = result.data;
+                }
+            });
+            console.log(viewdata);
+            $('#view-table tbody').find('tr').eq(0).find('td').html(viewdata.nic);
+            $('#view-table tbody').find('tr').eq(1).find('td').html(viewdata.customer_name);
+            $('#view-table tbody').find('tr').eq(2).find('td').html(viewdata.address);
+            $('#view-table #total').html(viewdata.total);
+            $('#view-table #issuable').html(viewdata.issuable);
+            $('#view-table #expected').html(viewdata.expected);
+
+            var TableData = viewdata.article_details;
+            props = ["ArticleName", "Carratage", "val_per_gram", "gross_weight", "net_weight", "value"];
+            $.each(TableData, function(i, TableData) {
+                var tr = $('<tr class="nirujan">');
+                $.each(props, function(i, prop) {
+                    $('<td>').html(TableData[prop]).appendTo(tr);
+                });
+                $('#view-table').find('tr').eq(4).after(tr);
+            });
+
+            $("#viewModal").on('hide.bs.modal', function() {
+                $('#view-table').find('tr').find('td').html("");
+                // $('#nirujan').remove();
+
+            });
+
         }
     </script>
 

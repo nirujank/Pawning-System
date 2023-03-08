@@ -66,4 +66,12 @@ class InvoiceController extends Controller
     public function view(){
         return view('invoice.view');
     }
+
+    public function getInvoice(Request $request){
+        $id = $request->id;
+        $invoice = Invoice::find($id);
+        // dd ($invoice);
+        return response()->json(['status_code' => '200', 'data' => $invoice]);
+
+    }
 }

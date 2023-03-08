@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('fetchinvoice',[FetchDataController::class,'invoice'])->name('fetchinvoice');
     Route::get('profile',[UserController::class,'profile'])->name('profile');
     Route::get('invoice',[InvoiceController::class,'index'])->name('invoice');
+    Route::get('getInvoice',[InvoiceController::class,'getInvoice'])->name('invoice.getInvoice');
     Route::get('view_invoice',[InvoiceController::class,'view'])->name('invoice.view');
     Route::get('get-carratage',[InvoiceController::class,'getcarratage'])->name('invoice.getcarratage');
     Route::post('saveInvoice',[InvoiceController::class,'saveInvoice'])->name('invoice.saveInvoice');

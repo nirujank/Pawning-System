@@ -7,6 +7,9 @@ use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\IssuingAmount;
 use Illuminate\Http\Request;
+// reference the Dompdf namespace
+use Dompdf\Dompdf;
+use PDF;
 
 class InvoiceController extends Controller
 {
@@ -28,16 +31,15 @@ class InvoiceController extends Controller
     {
         $old = Customer::where('email', '=', $request->data["email"])->first();
         // dd ($request->data["TableData"]);
-        if($old == null)
-        {
-        $customer = new Customer();
-        $customer->nic = $request->data["nic"];
-        $customer->customer_name = $request->data["customer"];
-        $customer->passport = $request->data["passport"];
-        $customer->address = $request->data["address"];
-        $customer->phone = $request->data["phone"];
-        $customer->email = $request->data["email"];
-        $customer->save();
+        if ($old == null) {
+            $customer = new Customer();
+            $customer->nic = $request->data["nic"];
+            $customer->customer_name = $request->data["customer"];
+            $customer->passport = $request->data["passport"];
+            $customer->address = $request->data["address"];
+            $customer->phone = $request->data["phone"];
+            $customer->email = $request->data["email"];
+            $customer->save();
         }
 
         $invoice = new Invoice();
@@ -63,15 +65,52 @@ class InvoiceController extends Controller
         );
     }
 
-    public function view(){
+    public function view()
+    {
         return view('invoice.view');
     }
 
-    public function getInvoice(Request $request){
+    public function getInvoice(Request $request)
+    {
         $id = $request->id;
         $invoice = Invoice::find($id);
         // dd ($invoice);
         return response()->json(['status_code' => '200', 'data' => $invoice]);
+    }
 
+    public function pdf(Request $request, $id)
+    {
+       $invoice = Invoice::find($id);
+       $article = $invoice->article_details;
+       $cou=count($article);
+
+    //    return $article;
+    //   return view('invoice.view',compact('article','cou'));
+    //    $article = json_decode($article, true);
+    //    $article=explode(',' $article);
+    //
+    // return $invoice->article_details;
+       $pdf = PDF::loadView('invoice.view', [
+        'data' => $invoice,
+        'article' => $article,
+        'cou'=> $cou,
+        'footer' => 'by Nirujan@pawning'
+    ]);
+
+    return $pdf->download('sample.pdf');
+        // instantiate and use the dompdf class
+    //     $dompdf = new Dompdf();
+    //     $html = "<h1>Invoice No:".$id."</h1>
+
+    //     $dompdf->loadHtml($html);
+
+    //     // (Optional) Setup the paper size and orientation
+    //     $dompdf->setPaper('A4', 'landscape');
+
+    //     // Render the HTML as PDF
+    //     $dompdf->render();
+
+    //     // Output the generated PDF to Browser
+    //     $dompdf->stream();
     }
 }

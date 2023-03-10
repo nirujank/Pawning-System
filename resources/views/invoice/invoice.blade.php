@@ -12,8 +12,9 @@
     <table id="invoice-table" class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>Invoice No</th>
                 <th>Customer</th>
+                <th>NIC</th>
                 <th>Contact No</th>
                 <th>Email</th>
                 <th>Total</th>
@@ -203,12 +204,16 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="modelHeading">Add New Article</h4>
+                    <h4 class="modal-title" id="modelHeading">Invoice</h4>
                 </div>
                 <div class="modal-body">
 
                     <table id="view-table" class="table table-bordered table-striped">
                         <tbody>
+                            <tr>
+                                <th>Invoice No:</th>
+                                <td class="invoice_no" colspan="5"></td>
+                            </tr>
                             <tr>
                                 <th>NIC</th>
                                 <td class="nic" colspan="5"></td>
@@ -252,7 +257,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="">Print</button>
+                    <a href="" type="button" class="btn btn-primary printpdf" onclick="">Print</a>
                 </div>
             </div>
         </div>
@@ -387,6 +392,10 @@
                     {
                         data: 'customer_name',
                         name: 'customer_name'
+                    },
+                    {
+                        data: 'nic',
+                        name: 'nic'
                     },
                     {
                         data: 'phone',
@@ -717,10 +726,11 @@
                     viewdata = result.data;
                 }
             });
-            console.log(viewdata);
-            $('#view-table tbody').find('tr').eq(0).find('td').html(viewdata.nic);
-            $('#view-table tbody').find('tr').eq(1).find('td').html(viewdata.customer_name);
-            $('#view-table tbody').find('tr').eq(2).find('td').html(viewdata.address);
+            // console.log(viewdata);
+            $('#view-table tbody').find('tr').eq(0).find('td').html(viewdata.id);
+            $('#view-table tbody').find('tr').eq(1).find('td').html(viewdata.nic);
+            $('#view-table tbody').find('tr').eq(2).find('td').html(viewdata.customer_name);
+            $('#view-table tbody').find('tr').eq(3).find('td').html(viewdata.address);
             $('#view-table #total').html(viewdata.total);
             $('#view-table #issuable').html(viewdata.issuable);
             $('#view-table #expected').html(viewdata.expected);
@@ -740,6 +750,8 @@
                 // $('#nirujan').remove();
 
             });
+
+            $('.printpdf').attr("href", "{{ URL::to('/pdf') }}"+'/'+ id);
 
         }
     </script>

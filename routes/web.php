@@ -43,6 +43,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('view_invoice',[InvoiceController::class,'view'])->name('invoice.view');
     Route::get('get-carratage',[InvoiceController::class,'getcarratage'])->name('invoice.getcarratage');
     Route::post('saveInvoice',[InvoiceController::class,'saveInvoice'])->name('invoice.saveInvoice');
+    Route::get('pdf/{id}',[InvoiceController::class,'pdf'])->name('invoice.pdf');
+
 
 
 

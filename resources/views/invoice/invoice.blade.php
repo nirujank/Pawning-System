@@ -19,7 +19,7 @@
                 <th>Email</th>
                 <th>Total</th>
                 <th>Issuable</th>
-                <th>Expected</th>
+                <th>Status</th>
                 <th>View</th>
             </tr>
         </thead>
@@ -240,16 +240,16 @@
 
                             </tr>
                             <tr>
-                                <th>Total Price</th>
-                                <td id="total" colspan="5"></td>
+                                <th colspan="5">Total Price</th>
+                                <td id="total"></td>
                             </tr>
                             <tr>
-                                <th>Issuable Amount</th>
-                                <td id="issuable" colspan="5"></td>
+                                <th colspan="5">Issuable Amount</th>
+                                <td id="issuable"></td>
                             </tr>
                             <tr>
-                                <th>Expected Amount</th>
-                                <td id="expected" colspan="5"></td>
+                                <th colspan="5">Expected Amount</th>
+                                <td id="expected"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -263,6 +263,140 @@
         </div>
 
     </div>
+
+    <div class="modal fade" id="billingModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modelHeading">Billing</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="billing-form">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Pawn Bill Number</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="bill_no" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Customer Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="customer" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">NIC</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="nic" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Email</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="email" placeholder="">
+                            </div>
+                        </div>
+                        </hr>
+                        <div class="form-group row">
+                            <div class="row col-md-6">
+                                <label for="" class="col-sm-4 col-form-label">Add Date</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="add_date" placeholder="">
+                                </div>
+                            </div>
+                            <div class="row col-md-6">
+                                <label for="" class="col-sm-4 col-form-label">Maturity Date</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="maturity_date" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="row col-md-6">
+                                <label for="" class="col-sm-4 col-form-label">Issued Amount</label>
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control" id="issued_amount" placeholder="">
+                                </div>
+                            </div>
+                            <div class="row col-md-6">
+                                <label for="" class="col-sm-4 col-form-label">Interest Rate</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="interest_rate" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="row col-md-6">
+                                <label for="" class="col-sm-4 col-form-label">Total Interest</label>
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control" id="total_interest" placeholder="">
+                                </div>
+                            </div>
+                            <div class="row col-md-6">
+                                <label for="" class="col-sm-4 col-form-label">Daily Interest</label>
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control" id="daily_interest" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="row col-md-6">
+                                <label for="" class="col-sm-4 col-form-label">Paid Amount</label>
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control" id="paid_amount" placeholder="">
+                                </div>
+                            </div>
+                            <div class="row col-md-6">
+                                <label for="" class="col-sm-4 col-form-label">Paid Interest</label>
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control" id="paid_interest" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="row col-md-6">
+                                <label for="" class="col-sm-4 col-form-label">Payable Amount</label>
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control" id="payable_amount" placeholder="">
+                                </div>
+                            </div>
+                            <div class="row col-md-6">
+                                <label for="" class="col-sm-4 col-form-label">Payable Interest</label>
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control" id="payable_interest" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="row col-md-6">
+                                <label for="" class="col-sm-4 col-form-label">Total Payable</label>
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control" id="total_payable" placeholder="">
+                                </div>
+                            </div>
+                            <div class="row col-md-6">
+                                <p>
+                                    <a class="full_payment">Do FullPayment and Release Artical</a></br>
+                                    <a class="half_payment">Do Half Payment</a>
+                                </p>
+
+                                {{-- <label for="" class="col-sm-4 col-form-label">Payable Interest</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="payable_interest" placeholder="">
+                            </div> --}}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="payment" class="btn btn-primary">Pay</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
 
 
 @stop
@@ -414,15 +548,28 @@
                         name: 'issuable'
                     },
                     {
-                        data: 'expected',
-                        name: 'expected'
+                        data: 'status',
+                        name: 'status',
+                        render: function(status, type, row, meta) {
+                            if (status == 'Active') {
+                                status = '<td><span  class="badge badge-primary">' + status + '</span></td>'
+                            } else if (status == 'Released') {
+                                status = '<td><span  class="badge badge-success">' + status + '</span></td>'
+                            } else {
+                                status = '<td><span class="badge badge-secondary">' + status +
+                                    '</span></td>'
+                            }
+                            return status;
+                        }
                     },
                     {
                         data: 'view',
                         name: 'view',
                         render: function(status, type, row, meta) {
                             action = '<a data-id="' + row.id + '" onclick="viewInvoice(' + row.id +
-                                ')" class="btn btn-info viewBtn">View &nbsp<i class="fa fa-eye" aria-hidden="true"></i></a>'
+                                ')" class="btn btn-info viewBtn">Article &nbsp<i class="fa fa-eye" aria-hidden="true"></i></a>&nbsp<a data-id="' +
+                                row.id + '" onclick="billing(' + row.id +
+                                ')" class="btn btn-info viewBtn">Payment &nbsp<i class="fa fa-eye" aria-hidden="true"></i></a>'
                             return action;
                         }
                     },
@@ -665,7 +812,7 @@
                 expected,
                 TableData,
             }
-            console.log(data);
+            // console.log(data);
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -682,7 +829,7 @@
                 },
                 success: function(response) {
                     if (response.success) {
-                        alert("success!!") //Message come from controller
+                        // alert("success!!") //Message come from controller
                         $("#addTodoModal").modal('hide');
                         $("#addTodoModal").find('input').val("");
                         $("#addTodoModal").find('textarea').val("");
@@ -712,7 +859,6 @@
             $('#viewModal').modal('show', function(e) {
                 var id = $(e.relatedTarget).data('id');
             });
-            // alert(id);
             var viewdata;
             $.ajax({
                 dataType: 'json',
@@ -751,7 +897,141 @@
 
             });
 
-            $('.printpdf').attr("href", "{{ URL::to('/pdf') }}"+'/'+ id);
+            $('.printpdf').attr("href", "{{ URL::to('/pdf') }}" + '/' + id);
+
+        }
+
+        function billing(id) {
+            var id;
+            $('#billingModal').modal('show', function(e) {
+                var id = $(e.relatedTarget).data('id');
+            });
+            var viewdata;
+            var interest;
+            var payment;
+            $.ajax({
+                dataType: 'json',
+                async: false,
+                url: "{{ route('invoice.getInvoice') }}",
+                data: {
+                    "id": id
+                },
+                type: 'get',
+                success: function(result) {
+                    viewdata = result.data;
+                    interest = result.interest;
+                    payment = result.payment;
+                }
+            });
+            // console.log(payment);
+
+            $('#billing-form #bill_no').val(payment.bill_no);
+            $('#billing-form #customer').val(viewdata.customer_name);
+            $('#billing-form #nic').val(viewdata.nic);
+            $('#billing-form #email').val(viewdata.email);
+            $('#billing-form #add_date').val(payment.add_date);
+            $('#billing-form #maturity_date').val(payment.maturity_date);
+            $('#billing-form #issued_amount').val(payment.issued_amount);
+            $('#billing-form #interest_rate').val(payment.interest_rate);
+            $('#billing-form #total_interest').val(payment.total_interest);
+            $('#billing-form #daily_interest').val(payment.daily_interest);
+            $('#billing-form #paid_amount').val(payment.paid_amount);
+            $('#billing-form #paid_interest').val(payment.paid_interest);
+            $('#billing-form #payable_amount').val(payment.payable_amount);
+            $('#billing-form #payable_interest').val(payment.payable_interest);
+            $('#billing-form #total_payable').val(payment.total_payable);
+
+            $('.full_payment').on('click', function() {
+                $('#billing-form #paid_amount').val(payment.issued_amount);
+                $('#billing-form #paid_interest').val(payment.total_interest);
+                $('#billing-form #payable_amount').val(0);
+                $('#billing-form #payable_interest').val(0);
+                $('#billing-form #total_payable').val(0);
+
+            });
+            $('.half_payment').on('click', function() {
+                $('#billing-form #paid_amount').val(parseInt(payment.paid_amount) + parseInt(payment.payable_amount / 2));
+                $('#billing-form #paid_interest').val(parseInt(payment.paid_interest) + parseInt(payment.payable_interest / 2));
+                $('#billing-form #payable_amount').val((payment.payable_amount) - payment.payable_amount / 2);
+                $('#billing-form #payable_interest').val((payment.payable_interest) - payment.payable_interest / 2);
+                $('#billing-form #total_payable').val((payment.payable_amount / 2) + (payment.payable_interest /
+                2));
+
+            });
+
+            // $('#billing-form #paid_amount').on('change', function() {
+
+            // });
+
+            $('#payment').on('click', function() {
+                var bill_no = $('#billing-form #bill_no').val();
+                var add_date = $('#billing-form #add_date').val();
+                var maturity_date = $('#billing-form #maturity_date').val();
+                var issued_amount = $('#billing-form #issued_amount').val();
+                var interest_rate = $('#billing-form #interest_rate').val();
+                var total_interest = $('#billing-form #total_interest').val();
+                var daily_interest = $('#billing-form #daily_interest').val();
+                var paid_amount = $('#billing-form #paid_amount').val();
+                var paid_interest = $('#billing-form #paid_interest').val();
+                var payable_amount = $('#billing-form #payable_amount').val();
+                var payable_interest = $('#billing-form #payable_interest').val();
+                var total_payable = $('#billing-form #total_payable').val();
+                var data = new Array();
+
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+
+                data = {
+                    bill_no,
+                    add_date,
+                    maturity_date,
+                    issued_amount,
+                    interest_rate,
+                    total_interest,
+                    daily_interest,
+                    paid_amount,
+                    paid_interest,
+                    payable_amount,
+                    payable_interest,
+                    total_payable,
+                }
+
+                $.ajax({
+                    url: "{{ route('invoice.savePayment') }}",
+                    method: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        data: data,
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $("#billingModal").modal('hide');
+                            $("#billingModal").find('input').val("");
+                            $("#billingModal").find('textarea').val("");
+                            $("#billingModal").find('select').val("");
+
+                            Toast.fire({
+                                type: 'success',
+                                title: "Payment Updated Successfully",
+                                customClass: {
+                                    popup: 'adjust'
+                                }
+                            });
+                            $("#invoice-table").dataTable().fnDestroy();
+                            fetchInvoice();
+                        } else {
+                            alert("Error")
+                        }
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+            });
 
         }
     </script>

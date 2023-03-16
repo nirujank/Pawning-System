@@ -61,59 +61,59 @@ table.blueTable td,
 </style>
 
 <body>
-    <h1>INDRA PAWNING SHOP</h1>
-    <h2>Invoice No:{{$data->id}}</h2>
+    <h1 style="color: #1c6ea4">INDRA PAWNING SHOP</h1>
+    <h2 style="color: #1c6ea4">Invoice No:{{$data->id}}</h2>
     <table class="blueTable">
         <tbody>
             <tr>
                 <th>
-                    <h4>NIC:</h4>
+                    <h4 style="color: #1c6ea4">NIC:</h4>
                 </th>
                 <td  colspan="5">
-                    <h5>{{ $data->nic }}</h5>
+                    <h4>{{ $data->nic }}</h4>
                 </td>
             </tr>
             <tr>
                 <th>
-                    <h4>Customer Name:</h4>
+                    <h4 style="color: #1c6ea4">Customer Name:</h4>
                 </th>
                 <td  colspan="5">
-                    <h5>{{ $data->customer_name }}</h5>
+                    <h4>{{ $data->customer_name }}</h4>
                 </td>
             </tr>
             <tr>
                 <th>
-                    <h4>Address:</h4>
+                    <h4 style="color: #1c6ea4">Address:</h4>
                 </th>
                 <td  colspan="5">
-                    <h5>{{ $data->address }}</h5>
+                    <h4>{{ $data->address }}</h4>
                 </td>
             </tr>
             <tr>
                 <th>
-                    <h4>Article Name</h4>
+                    <h4 style="color: #1c6ea4">Article Name</h4>
                 </th>
                 <th>
-                    <h4>Carratage Value</h4>
+                    <h4 style="color: #1c6ea4">Carratage Value</h4>
                 </th>
                 <th>
-                    <h4>Value Per Gram</h4>
+                    <h4 style="color: #1c6ea4">Value Per Gram</h4>
                 </th>
                 <th>
-                    <h4>Gross Weight</h4>
+                    <h4 style="color: #1c6ea4">Gross Weight</h4>
                 </th>
                 <th>
-                    <h4>Net Weight</h4>
+                    <h4 style="color: #1c6ea4">Net Weight</h4>
                 </th>
                 <th>
-                    <h4>Value</h4>
+                    <h4 style="color: #1c6ea4">Value</h4>
                 </th>
             </tr>
             @while ($cou > 0)
                 <tr>
                     @foreach ($article[$cou - 1] as $disease)
                         <td>
-                            <h5>{{ $disease }}</h5>
+                            <h4>{{ $disease }}</h4>
                         </td>
                     @endforeach
                 </tr>
@@ -121,27 +121,27 @@ table.blueTable td,
             @endwhile
 
             <tr>
-                <th>
-                    <h4>Total Price:</h4>
+                <th colspan="5">
+                    <h4 style="color: #1c6ea4">Total Price:</h4>
                 </th>
-                <td  colspan="5">
-                    <h5>{{ $data->total }}</h5>
+                <td  >
+                    <h4>{{ $data->total }}</h4>
                 </td>
             </tr>
             <tr>
-                <th>
-                    <h4>Issuable Amount:</h4>
+                <th colspan="5">
+                    <h4 style="color: #1c6ea4">Issuable Amount:</h4>
                 </th>
-                <td  colspan="5">
-                    <h5>{{ $data->issuable }}</h5>
+                <td  >
+                    <h4>{{ $data->issuable }}</h4>
                 </td>
             </tr>
             <tr>
-                <th>
-                    <h4>Expected Amount:</h4>
+                <th colspan="5">
+                    <h4 style="color: #1c6ea4">Expected Amount:</h4>
                 </th>
-                <td  colspan="5">
-                    <h5>{{ $data->expected }}</h5>
+                <td  >
+                    <h4>{{ $data->expected }}</h4>
                 </td>
             </tr>
         </tbody>

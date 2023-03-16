@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('total');
             $table->string('issuable');
             $table->string('expected')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }

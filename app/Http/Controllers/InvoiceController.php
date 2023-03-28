@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\Invoice as JobsInvoice;
+use App\Mail\InvoiceMail;
 use App\Models\Carratage;
 use App\Models\Customer;
 use App\Models\Interest;
 use App\Models\Invoice;
 use App\Models\IssuingAmount;
 use App\Models\Payment;
+use DateTime;
 use Illuminate\Http\Request;
 // reference the Dompdf namespace
 use Dompdf\Dompdf;
 use PDF;
+use Illuminate\Support\Facades\Mail;
 
 class InvoiceController extends Controller
 {
@@ -59,24 +63,32 @@ class InvoiceController extends Controller
         $invoice->status = "Active";
         $invoice->save();
 
-        $interest = Interest::where('created_at','<=',$invoice->created_at)
-        ->orderBy('created_at', 'DESC')
-        ->first();
+        $interest = Interest::where('created_at', '<=', $invoice->created_at)
+            ->orderBy('created_at', 'DESC')
+            ->first();
 
         $payment = new Payment();
         $payment->bill_no = $invoice->id;
         $payment->add_date = $invoice->created_at;
-        $payment->maturity_date =$invoice->created_at->addYear();
+        $payment->maturity_date = $invoice->created_at->addYear();
         $payment->issued_amount = $request->data["issuable"];
         $payment->interest_rate = $interest->current_interest_rate;
-        $payment->total_interest =(($request->data["issuable"])*($interest->current_interest_rate)/100);
-        $payment->daily_interest =(($request->data["issuable"])*($interest->current_interest_rate)/36500);
-        $payment->paid_amount =0.00;
-        $payment->paid_interest =0.00;
-        $payment->payable_amount =$request->data["issuable"];
-        $payment->payable_interest =(($request->data["issuable"])*($interest->current_interest_rate)/100);
-        $payment->total_payable =(($request->data["issuable"])+(($request->data["issuable"])*($interest->current_interest_rate)/100));
+        $payment->total_interest = (($request->data["issuable"]) * ($interest->current_interest_rate) / 100);
+        $payment->daily_interest = (($request->data["issuable"]) * ($interest->current_interest_rate) / 36500);
+        $payment->paid_amount = 0.00;
+        $payment->paid_interest = 0.00;
+        $payment->payable_amount = $request->data["issuable"];
+        $payment->payable_interest = (($request->data["issuable"]) * ($interest->current_interest_rate) / 100);
+        $payment->total_payable = (($request->data["issuable"]) + (($request->data["issuable"]) * ($interest->current_interest_rate) / 100));
         $payment->save();
+
+        // $customer = $old;
+        // $email = $customer->email;
+        // return $invoice;
+        // Mail::to($customer->email)->send(new InvoiceMail($invoice));
+        $job = new JobsInvoice($invoice);
+        dispatch($job);
+        //  laravel queue DOC on: https://www.iankumu.com/blog/laravel-queues/
 
         return response()->json(
             [
@@ -95,12 +107,12 @@ class InvoiceController extends Controller
     {
         $id = $request->id;
         $invoice = Invoice::find($id);
-        $interest = Interest::where('created_at','<=',$invoice->created_at)
-       ->orderBy('created_at', 'DESC')
-       ->first();
-       $payment = Payment::where('bill_no','=',$id)
-       ->orderBy('created_at', 'DESC')
-       ->first();
+        $interest = Interest::where('created_at', '<=', $invoice->created_at)
+            ->orderBy('created_at', 'DESC')
+            ->first();
+        $payment = Payment::where('bill_no', '=', $id)
+            ->orderBy('created_at', 'DESC')
+            ->first();
 
 
         // dd ($payment);
@@ -109,38 +121,38 @@ class InvoiceController extends Controller
 
     public function pdf(Request $request, $id)
     {
-       $invoice = Invoice::find($id);
-       $article = $invoice->article_details;
-       $cou=count($article);
+        $invoice = Invoice::find($id);
+        $article = $invoice->article_details;
+        $cou = count($article);
 
-    //    return $article;
-    //   return view('invoice.view',compact('article','cou'));
-    //    $article = json_decode($article, true);
-    //    $article=explode(',' $article);
-    //
-    // return $invoice->article_details;
-       $pdf = PDF::loadView('invoice.view', [
-        'data' => $invoice,
-        'article' => $article,
-        'cou'=> $cou,
-        'footer' => 'by Nirujan@pawning'
-    ]);
+        //    return $article;
+        //   return view('invoice.view',compact('article','cou'));
+        //    $article = json_decode($article, true);
+        //    $article=explode(',' $article);
+        //
+        // return $invoice->article_details;
+        $pdf = PDF::loadView('invoice.view', [
+            'data' => $invoice,
+            'article' => $article,
+            'cou' => $cou,
+            'footer' => 'by Nirujan@pawning'
+        ]);
 
-    return $pdf->download('sample.pdf');
+        return $pdf->download('sample.pdf');
         // instantiate and use the dompdf class
-    //     $dompdf = new Dompdf();
-    //     $html = "<h1>Invoice No:".$id."</h1>
+        //     $dompdf = new Dompdf();
+        //     $html = "<h1>Invoice No:".$id."</h1>
 
-    //     $dompdf->loadHtml($html);
+        //     $dompdf->loadHtml($html);
 
-    //     // (Optional) Setup the paper size and orientation
-    //     $dompdf->setPaper('A4', 'landscape');
+        //     // (Optional) Setup the paper size and orientation
+        //     $dompdf->setPaper('A4', 'landscape');
 
-    //     // Render the HTML as PDF
-    //     $dompdf->render();
+        //     // Render the HTML as PDF
+        //     $dompdf->render();
 
-    //     // Output the generated PDF to Browser
-    //     $dompdf->stream();
+        //     // Output the generated PDF to Browser
+        //     $dompdf->stream();
     }
 
     public function savePayment(Request $request)
@@ -156,12 +168,12 @@ class InvoiceController extends Controller
         $payment->daily_interest = $request->data["daily_interest"];
         $payment->paid_amount = $request->data["paid_amount"];
         $payment->paid_interest = $request->data["paid_interest"];
-        $payment->payable_amount =$request->data["payable_amount"];
+        $payment->payable_amount = $request->data["payable_amount"];
         $payment->payable_interest = $request->data["payable_interest"];
         $payment->total_payable = $request->data["total_payable"];
         $payment->save();
 
-        if($request->data["total_payable"] == 0){
+        if ($request->data["total_payable"] == 0) {
             $invoice = Invoice::find($request->data["bill_no"]);
             $invoice->status = "Released";
             $invoice->update();
@@ -173,6 +185,5 @@ class InvoiceController extends Controller
                 'message' => 'Payment Updated successfully'
             ]
         );
-
     }
 }

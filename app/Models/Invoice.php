@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Invoice extends Model
 {
@@ -18,4 +19,9 @@ class Invoice extends Model
     ];
 
     protected $casts = ['article_details' => 'array'];
+
+    public function payment(): HasMany
+    {
+        return $this->hasMany(Payment::class,'bill_no','id');
+    }
 }

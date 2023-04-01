@@ -256,7 +256,7 @@ return [
     'dashboard_url' => 'home',
     'logout_url' => 'logout',
     'login_url' => 'login',
-    'register_url' => 'register',
+    'register_url' => 'false',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
     'profile_url' => false,
@@ -321,45 +321,33 @@ return [
         ['header' => 'Jobs'],
         [
             'text'    => 'MANAGE PAWNING',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-fw fa-cubes',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text'    => 'Articles',
+                    'url'     => '/article',
                 ],
                 [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
+                    'text' => 'Carratage',
+                    'url'  => '/carrat',
                 ],
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text' => 'Interest Rating',
+                    'url'  => '/interest',
+                ],
+                [
+                    'text' => 'Issuing Amount',
+                    'url'  => '/issue',
+                ],
+                [
+                    'text' => 'Invoice',
+                    'url'  => '/invoice',
                 ],
             ],
         ],
         [
             'text'    => 'PAWN SHOP',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-fw fa-balance-scale ',
             'submenu' => [
                 [
                     'text' => 'level_one',
@@ -415,7 +403,7 @@ return [
         ],
         [
             'text'    => 'REPORTING',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-fw fa-folder-open',
             'submenu' => [
                 [
                     'text' => 'level_one',
@@ -443,22 +431,18 @@ return [
         ],
         [
             'text'    => 'ADMINISTRATOR',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-fw fa-address-card ',
+            'can'         => 'user',
             'submenu' => [
                 [
-                    'text' => 'Add New User',
-                    'url'  => '#',
-                    'icon' => 'fas fa-fw fa-lock',
-                ],
-                [
-                    'text' => 'Users List',
+                    'text' => 'Users',
                     'url'  => 'user',
-                    'icon' => 'fas fa-fw fa-lock',
+                    'icon' => 'fas fa-fw fa-users',
                 ],
                 [
                     'text' => 'Rset Password',
                     'url'  => '#',
-                    'icon' => 'fas fa-fw fa-lock',
+                    'icon' => 'fas fa-fw fa-user-md',
                 ],
             ],
         ],
@@ -466,22 +450,22 @@ return [
 
 
 
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
-        ],
+        // ['header' => 'labels'],
+        // [
+        //     'text'       => 'important',
+        //     'icon_color' => 'red',
+        //     'url'        => '#',
+        // ],
+        // [
+        //     'text'       => 'warning',
+        //     'icon_color' => 'yellow',
+        //     'url'        => '#',
+        // ],
+        // [
+        //     'text'       => 'information',
+        //     'icon_color' => 'cyan',
+        //     'url'        => '#',
+        // ],
     ],
 
     /*
@@ -566,7 +550,7 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',

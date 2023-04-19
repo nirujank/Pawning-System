@@ -6,6 +6,7 @@ use App\Http\Controllers\FetchDataController;
 use App\Http\Controllers\InterestController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\IssuingAmountController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('saveInvoice',[InvoiceController::class,'saveInvoice'])->name('invoice.saveInvoice');
     Route::post('savePayment',[InvoiceController::class,'savePayment'])->name('invoice.savePayment');
     Route::get('pdf/{id}',[InvoiceController::class,'pdf'])->name('invoice.pdf');
+    Route::resource('report',ReportController::class);
+    Route::get('fetchReport',[FetchDataController::class,'report'])->name('fetchReport');
 
 
 

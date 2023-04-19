@@ -610,6 +610,7 @@ class ComposerStaticInit0c4a224ea98d9ae1a514a309d79cd51b
         'App\\Models\\IssuingAmount' => __DIR__ . '/../..' . '/app/Models/IssuingAmount.php',
         'App\\Models\\Pawning' => __DIR__ . '/../..' . '/app/Models/Pawning.php',
         'App\\Models\\Payment' => __DIR__ . '/../..' . '/app/Models/Payment.php',
+        'App\\Models\\Report' => __DIR__ . '/../..' . '/app/Models/Report.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',

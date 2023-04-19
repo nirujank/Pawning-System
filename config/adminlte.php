@@ -339,10 +339,7 @@ return [
                     'text' => 'Issuing Amount',
                     'url'  => '/issue',
                 ],
-                [
-                    'text' => 'Invoice',
-                    'url'  => '/invoice',
-                ],
+
             ],
         ],
         [
@@ -350,26 +347,8 @@ return [
             'icon'    => 'fas fa-fw fa-balance-scale ',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text' => 'Invoice',
+                    'url'  => '/invoice',
                 ],
             ],
         ],
@@ -406,26 +385,8 @@ return [
             'icon'    => 'fas fa-fw fa-folder-open',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text' => 'Reports',
+                    'url'  => '/report',
                 ],
             ],
         ],

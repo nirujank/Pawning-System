@@ -7,6 +7,7 @@ use App\Models\Carratage;
 use App\Models\Interest;
 use App\Models\Invoice;
 use App\Models\IssuingAmount;
+use App\Models\Report;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -118,6 +119,17 @@ class FetchDataController extends Controller
         //     'articles' => $articles,
         // ]);
         return view('invoice.invoice', compact('invoice'));
+    }
+
+    public function report(Request $request)
+    {
+        $reports = Report::all();
+        if ($request->ajax()) {
+            $report = Datatables()::of($reports)
+                ->make(true);
+            return $report;
+        }
+        return view('report.index', compact('report'));
     }
 
 

@@ -116,9 +116,9 @@
                                             <nobr><button class="btn btn-sm btn-success" id="add"
                                                     style="float: right"><i class="fa fa-plus-circle"
                                                         aria-hidden="true"></i>&nbsp; Add</button>&nbsp;
-                                                <button class="btn btn-sm btn-success" id="get"
+                                                {{-- <button class="btn btn-sm btn-success" id="get"
                                                     style="float: right"><i class="fa fa-plus-circle"
-                                                        aria-hidden="true"></i>&nbsp; get</button></br></br>
+                                                        aria-hidden="true"></i>&nbsp; get</button></br></br> --}}
                                             </nobr>
                                         </td>
                                     </tr>

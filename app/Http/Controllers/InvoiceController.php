@@ -82,6 +82,17 @@ class InvoiceController extends Controller
         $payment->total_payable = (($request->data["issuable"]) + (($request->data["issuable"]) * ($interest->current_interest_rate) / 100));
         $payment->save();
 
+        $report = new Report();
+        $report -> name = $request->data["customer"];
+        $report -> status = "Active";
+        $report -> first_reminder = $invoice->created_at->addYear()->subDays(30);
+        $report -> second_reminder = $invoice->created_at->addYear()->subDays(15);
+        $report -> third_reminder = $invoice->created_at->addYear()->subDays(5);
+        $report -> first_reminder_desc = null;
+        $report -> second_reminder_desc = null;
+        $report -> third_reminder_desc = null;
+        $report->save();
+
         // $customer = $old;
         // $email = $customer->email;
         // return $invoice;

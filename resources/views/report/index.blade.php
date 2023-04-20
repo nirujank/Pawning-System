@@ -10,8 +10,10 @@
 <table id="data-table" class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th rowspan="2">ID</th>
+            {{-- <th rowspan="2">ID</th> --}}
+            <th rowspan="2">Invoice No</th>
             <th rowspan="2">Name</th>
+            <th rowspan="2">Status</th>
             <th colspan="2">First Reminder</th>
             <th colspan="2">Second Reminder</th>
             <th colspan="2">Third Reminder</th>
@@ -19,11 +21,11 @@
         </tr>
         <tr>
             <th>Date</th>
-            <th>Description</th>
+            <th>Response and Followup</th>
             <th >Date</th>
-            <th >Description</th>
+            <th >Response and Followup</th>
             <th >Date</th>
-            <th >Description</th>
+            <th >Response and Followup</th>
 
         </tr>
     </thead>
@@ -47,19 +49,19 @@
                     <label for="name" class="col-sm-12">First Reminder</label>
                     <div class="col-sm-12">
                         <textarea type="text" class="form-control" id="first_reminder_desc" name="first_reminder_desc"
-                            placeholder="Enter First Reminder Description"></textarea>
+                            placeholder="Enter First Reminder's Responses Here"></textarea>
                         <span id="taskError" class="alert-message"></span>
                     </div>
                     <label for="name" class="col-sm-12">Second Reminder</label>
                     <div class="col-sm-12">
                         <textarea type="text" class="form-control" id="second_reminder_desc" name="second_reminder_desc"
-                            placeholder="Enter Second Reminder Description"></textarea>
+                            placeholder="Enter Second Reminder's Responses Here"></textarea>
                         <span id="taskError" class="alert-message"></span>
                     </div>
                     <label for="name" class="col-sm-12">Third Reminder</label>
                     <div class="col-sm-12">
                         <textarea type="text" class="form-control" id="third_reminder_desc" name="third_reminder_desc"
-                            placeholder="Enter Third Reminder Description"></textarea>
+                            placeholder="Enter Third Reminder's Responses Here"></textarea>
                         <span id="taskError" class="alert-message"></span>
                     </div>
                 </div>
@@ -93,13 +95,33 @@
             processing: true,
             serverSide: true,
             ajax: '{{ route('fetchReport') }}',
-            columns: [{
-                    data: 'id',
-                    name: 'id'
+            columns: [
+                // {
+                //     data: 'id',
+                //     name: 'id'
+                // },
+                {
+                    data: 'invoice_no',
+                    name: 'invoice_no'
                 },
                 {
                     data: 'name',
                     name: 'name'
+                },
+                {
+                    data: 'status',
+                    name: 'status',
+                    render: function(status, type, row, meta) {
+                            if (status == 'Active') {
+                                status = '<td><span  class="badge badge-primary">' + status + '</span></td>'
+                            } else if (status == 'Closed') {
+                                status = '<td><span  class="badge badge-success">' + status + '</span></td>'
+                            } else {
+                                status = '<td><span class="badge badge-secondary">' + status +
+                                    '</span></td>'
+                            }
+                            return status;
+                        }
                 },
                 {
                     data: 'first_reminder',
@@ -129,8 +151,14 @@
                             data: 'action',
                             name: 'action',
                             render: function(status, type, row, meta) {
+                                if(row.status == "Closed")
+                                {
+                                    action = '<span class="badge badge-success"> Closed</span>';
+                                }else
+                                {
                                 action = '<a data-id="' + row.id + '" onclick="editTodo(' + row.id +
-                                    ')" class="btn btn-info editBtn">Update<i class="fa fa-sm fa-fw fa-pen"></i></a>'
+                                    ')" class="btn btn-info editBtn">Update<i class="fa fa-sm fa-fw fa-pen"></i></a>';
+                                }
                                 return action;
                             }
                         },

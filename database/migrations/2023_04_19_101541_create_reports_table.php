@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('invoice_no');
             $table->string('status');
             $table->string('first_reminder');
             $table->text('first_reminder_desc')->nullable();

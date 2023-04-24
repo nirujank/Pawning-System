@@ -3,18 +3,18 @@
 @section('title', 'Add Article')
 
 @section('content_header')
-    <h1>Carratage Value</h1>
+    <h1>Caratage Value</h1>
 @stop
 
 @section('content')
     <div id="success_message"></div>
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addTodoModal">Add New Carratage</button>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addTodoModal">Add New Caratage</button>
     </br></br>
     <table id="data-table" class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>No</th>
-                <th>Carratage Value(K)</th>
+                <th>Caratage Value(K)</th>
                 <th>Value Per 1gram(1g)</th>
                 <th>Actions</th>
 
@@ -30,14 +30,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="modelHeading">New Carratage Value</h4>
+                    <h4 class="modal-title" id="modelHeading">New Caratage Value</h4>
                 </div>
                 <div class="modal-body">
 
                     <ul id="saveform_errList"></ul>
 
                     <div class="form-group">
-                        <label for="name" class="col-sm-12">Carratage Value(K)</label>
+                        <label for="name" class="col-sm-12">Caratage Value(K)</label>
                         <div class="col-sm-12">
                             <input type="number" class="form-control" id="carrat_value" name="carrat_value"
                                 placeholder="Enter Carratage Value">
@@ -68,14 +68,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Edit Carratage</h4>
+                    <h4 class="modal-title">Edit Caratage</h4>
                 </div>
                 <div class="modal-body">
                     <ul id="edit_saveform_errList"></ul>
 
                     <input type="hidden" name="edit_todo_id" id="edit_todo_id">
                     <div class="form-group">
-                        <label for="name" class="col-sm-2">Carratage Value(K)</label>
+                        <label for="name" class="col-sm-2">Caratage Value(K)</label>
                         <div class="col-sm-12">
                             <input type="number" class="form-control" id="edit_carrat_value" name="edit_carrat_value"
                                 placeholder="Enter Carratage Value">

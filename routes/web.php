@@ -23,10 +23,10 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/', function () {
-    return view('welcome');
-    });
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    // Route::get('/', function () {
+    // return view('home');
+    // });
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('user',UserController::class);
     Route::resource('article',ArticleController::class);
     Route::resource('carrat',CarratageController::class);

@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'false',
@@ -313,7 +313,7 @@ return [
         ],
         [
             'text'        => 'DashBoard',
-            'url'         => '#',
+            'url'         => '/',
             'icon'        => 'far fa-fw fa-file',
             // 'label'       => 4,
             'label_color' => 'success',
@@ -328,7 +328,7 @@ return [
                     'url'     => '/article',
                 ],
                 [
-                    'text' => 'Carratage',
+                    'text' => 'Caratage',
                     'url'  => '/carrat',
                 ],
                 [
@@ -381,11 +381,11 @@ return [
             ],
         ],
         [
-            'text'    => 'REPORTING',
+            'text'    => 'Customer Monitoring',
             'icon'    => 'fas fa-fw fa-folder-open',
             'submenu' => [
                 [
-                    'text' => 'Reports',
+                    'text' => 'Reminders',
                     'url'  => '/report',
                 ],
             ],
